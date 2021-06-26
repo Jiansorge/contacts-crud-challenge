@@ -1,38 +1,42 @@
-.App {
-  text-align: center;
+.app {
+  display: flex;
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.contact-list{
+  display:flex;
+  flex-direction: column;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header {
+  display: flex;
+  align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.contact{
+  height: 100%;
+}
+
+.edit-name{
+  display: flex;
+}
+
+.edit-name__first,
+.edit-name__last{
   display: flex;
   flex-direction: column;
+}
+
+.contact-emails{
+  display: flex;
+  flex-direction: column;
+}
+
+.add-email {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.add-email p{
+  padding: 7px;
 }
