@@ -46,9 +46,11 @@ const Contact = () => {
   const CrudButtons = () => {
     return(
       <section className="crud-buttons">
-        <button>Delete</button>
-        <button>Cancel</button>
-        <button>Save</button>
+        <button className="delete">Delete</button>
+        <div>
+          <button className="cancel">Cancel</button>
+          <button className="save">Save</button>
+        </div>
       </section>
     )
   }
