@@ -1,17 +1,19 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-const Contact = () => {
+const Contact = ({ contact, isLoading }) => {
   const EditName = () =>{
     return(
       <section className="edit-name">
         <div className="edit-name__first">
-          <label for="contact-first-name">First Name</label>
-          <input type="text" id="contact-first-name" name="first-name" />
+          <label htmlFor="contact-first-name">First Name</label>
+          <input type="text" id="contact-first-name" name="first-name" 
+          value={contact.firstName}/>
         </div>
         <div className="edit-name__last">
-          <label for="contact-last-name">Last Name</label>
-          <input type="text" id="contact-last-name" name="last-name" />
+          <label htmlFor="contact-last-name">Last Name</label>
+          <input type="text" id="contact-last-name" name="last-name" 
+          value={contact.lastName}/>
           </div>
       </section>
     )
@@ -20,13 +22,11 @@ const Contact = () => {
   const EditEmails = () => {
     return(
       <section name="contact-emails" className="contact-emails">
-        <label for="contact-emails">Email</label>
+        <label htmlFor="contact-emails">Email</label>
         <ul>
           {
-            // contactDat?.emails.map(email=> {
-            //   return(
-            //   <li>{email}</li>
-            // )})
+            Object.values(contact.emails).map(email=> {
+              return(<li>{email}</li>)})
           }
         </ul>
         <AddEmail/>
@@ -37,7 +37,9 @@ const Contact = () => {
   const AddEmail = () => {
     return(
       <div className="add-email">
-        <FontAwesomeIcon icon={faPlusCircle} />
+        <div>
+          <FontAwesomeIcon icon={faPlusCircle} />
+        </div>  
         <p>add email</p>
       </div>
     )
@@ -57,11 +59,14 @@ const Contact = () => {
 
   return (
     <form className="contact">
-      <fieldset>
-        <EditName/>
-        <EditEmails/>
-        <CrudButtons/>
-      </fieldset>
+      {
+        !isLoading && !!contact &&
+        <fieldset>
+          <EditName/>
+          <EditEmails/>
+          <CrudButtons/>
+        </fieldset>
+      }
     </form>
   );
 }

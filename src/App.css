@@ -21,6 +21,28 @@
   background-color: rgb(248,250,255);
 }
 
+.contact-list__icon{
+  cursor: pointer;
+}
+
+.contact-list ul{
+  display: flex;
+  flex-flow: column nowrap;
+  padding:12px 0;
+  align-items: flex-start;
+  list-style: none;
+}
+
+li.contact-list__item{
+  padding: 6px 20px;
+  cursor: pointer;
+  width:100%;
+}
+
+li.contact-list__item:hover{
+  background-color: rgb(91,156,252);
+}
+
 header {
   display: flex;
   align-items: center;

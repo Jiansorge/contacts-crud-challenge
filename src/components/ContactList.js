@@ -3,16 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 
-const ContactList = () => {
+const ContactList = ({ isLoading, contacts }) => {
   const Contacts = () =>{
     return(
       <ul>
         {
-          // data?.contacts.map(contact=>{
-          //   return(
-          //     <li>{contact}</li>
-          //   )
-          // })
+          !isLoading && !!contacts && contacts.length>0 
+          && Object.values(contacts).map((person,index)=>{
+              return(<li className="contact-list__item" key={person.id}>{person.firstName} {person.lastName}</li>)
+          })
         }
       </ul>
     )
@@ -22,7 +21,9 @@ const ContactList = () => {
     <div className="contact-list">
       <header>
         <h1>Contacts</h1>
-        <FontAwesomeIcon icon={faPlusCircle} />
+        <div className="contact-list__icon">
+          <FontAwesomeIcon icon={faPlusCircle} />
+        </div>
       </header>
       <Contacts/>   
     </div>
