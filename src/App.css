@@ -101,6 +101,34 @@ fieldset{
 
 .contact-emails label{
   font-size: 10px;
+  padding: 4px 0 ;
+}
+
+.contact-emails ul {
+  list-style-type: none;
+  font-size: 14px;
+}
+
+.contact-emails li{
+  padding: 7px 0;
+  cursor: pointer;
+  display: flex;
+}
+
+li.deselected{
+  text-decoration: dashed;
+  color:rgb(252,89,91,0.9);
+  font-style: italic;
+}
+
+.contact-delete-email{
+  padding: 0 5px;
+  color:rgb(252,89,91);
+  display: none;
+}
+
+li:hover .contact-delete-email{
+  display: block;
 }
 
 .add-email {
@@ -147,4 +175,8 @@ button.cancel{
 button.save{
   color:white;
   background-color: rgb(91,156,252);
+}
+
+button.disabled{
+  opacity: 0.4;
 }

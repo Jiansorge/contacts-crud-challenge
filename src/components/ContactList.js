@@ -10,7 +10,7 @@ const ContactList = ({ isLoading, contacts }) => {
         {
           !isLoading && !!contacts && contacts.length>0 
           && Object.values(contacts).map((person,index)=>{
-              return(<li className="contact-list__item" key={person.id}>{person.firstName} {person.lastName}</li>)
+              return(<li className="contact-list__item" key={`contact-${person.id}`}>{person.firstName} {person.lastName}</li>)
           })
         }
       </ul>

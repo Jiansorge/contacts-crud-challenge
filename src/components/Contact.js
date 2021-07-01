@@ -1,4 +1,5 @@
 import React from 'react';
+import { RiDeleteBack2Fill  } from 'react-icons/ri';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 const Contact = ({ contact, isLoading }) => {
@@ -6,14 +7,14 @@ const Contact = ({ contact, isLoading }) => {
     return(
       <section className="edit-name">
         <div className="edit-name__first">
-          <label htmlFor="contact-first-name">First Name</label>
+          <label htmlFor="contact-first-name" >First Name</label>
           <input type="text" id="contact-first-name" name="first-name" 
-          value={contact.firstName}/>
+          defaultValue={contact.firstName}/>
         </div>
         <div className="edit-name__last">
           <label htmlFor="contact-last-name">Last Name</label>
           <input type="text" id="contact-last-name" name="last-name" 
-          value={contact.lastName}/>
+          defaultValue={contact.lastName}/>
           </div>
       </section>
     )
@@ -25,8 +26,12 @@ const Contact = ({ contact, isLoading }) => {
         <label htmlFor="contact-emails">Email</label>
         <ul>
           {
-            Object.values(contact.emails).map(email=> {
-              return(<li>{email}</li>)})
+            Object.values(contact.emails).map((email,index)=> {
+              return(<li key={`contact-${contact.id}-email-${index}`}
+              >
+                <p>{email}</p>
+                <span className="contact-delete-email"><RiDeleteBack2Fill/></span>
+              </li>)})
           }
         </ul>
         <AddEmail/>
