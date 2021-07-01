@@ -9,13 +9,30 @@ function App() {
   const [contact, setContact] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
 
-  // const getSingleContact=(contactId)=>{
+  const selectContact=(contactId)=>{
+    setContact(contacts.find(person=>person.id===contactId))
+  }
 
-  // }
-
-  // const editContact=(contactId)=>{
-
-  // }
+  const editContact=(contactId, body)=>{
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    };
+    console.log("body",body)
+    console.log("request options", requestOptions)
+    fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          const tempData = contacts
+          tempData[tempData.findIndex(person=>person.id===contactId)] = data
+          setContacts(tempData)
+          console.log("tempData",tempData)
+          console.log('data',data)
+      })
+        .then(setIsLoading(true))
+        .catch(e=>console.log(e))
+    }
 
   // const deleteContact=(contactId)=>{
 
@@ -26,28 +43,32 @@ function App() {
   // }
 
   useEffect(() => {
-    if(!!contacts && contacts.length===0){
+    if(isLoading){
       fetch('https://avb-contacts-api.herokuapp.com/contacts/paginated')
       .then( response =>response.json())
-      .then(data=>setContacts(data.contacts))
+      .then(data=>{
+        setContacts(data.contacts)
+        setContact(data.contacts[0])
+      })
       .then(setIsLoading(false))
       .catch(error => {
           setErrorMessage({ errorMessage: error.toString() });
           console.error('There was an error!', error);
       });
     }
-  }, [contacts]);
-
-  useEffect(()=>{
-    setContact(Object.values(contacts)[0])
-  }, [contacts, contact])
+    console.log("contacts",contacts)
+    console.log("contact",contact)
+  }, [contacts, isLoading]);
 
   return (
     <div className="app">
-        <ContactList isLoading={isLoading} contacts={contacts}/>
-        <Contact contact={contact} isLoading={isLoading}/>
+        <ContactList isLoading={isLoading} 
+          contacts={contacts} 
+          selectContact={selectContact}/>
+        <Contact contact={contact} isLoading={isLoading}
+          editContact={editContact}/>
     </div>
-  );
+  )
 }
 
 export default App;

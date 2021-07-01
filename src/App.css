@@ -72,12 +72,11 @@ fieldset{
   font-size: 10px;
 }
 
-.edit-name input{
+input{
   background-color: rgb(249,251,255);
   border: 1px solid rgb(230,240,254);
-  padding: 7px;
   color: rgb(85,85,85);
-
+  padding: 7px;
 }
 
 .edit-name__first,
@@ -116,19 +115,27 @@ fieldset{
 }
 
 li.deselected{
-  text-decoration: dashed;
+  text-decoration: line-through;
   color:rgb(252,89,91,0.9);
   font-style: italic;
 }
 
 .contact-delete-email{
-  padding: 0 5px;
+  padding: 0 5px ;
   color:rgb(252,89,91);
   display: none;
 }
 
 li:hover .contact-delete-email{
   display: block;
+}
+
+li.deselected .contact-delete-email{
+  display: none;
+}
+
+.contact-emails input {
+  margin: 6px 0;
 }
 
 .add-email {
