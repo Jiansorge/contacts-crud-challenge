@@ -6,6 +6,7 @@ const Contact = ({ contact, isLoading, editContact }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
   const [emails, setEmails] = useState(contact?.emails);
+  const [newEmails, setNewEmails] = useState(['','']);
 
   const toggleEmail = (email, index, isEnabled) => {
     const tempEmails = emails
@@ -18,8 +19,13 @@ const Contact = ({ contact, isLoading, editContact }) => {
     }
   }
 
-  const addEmail = (string) => {
-    
+  const addEmail = () => {
+    setNewEmails(newEmails.push(''))
+    console.log("new emails", newEmails)
+  }
+
+  const editNewEmail = () => {
+
   }
 
   const EditName = () =>{
@@ -61,19 +67,26 @@ const Contact = ({ contact, isLoading, editContact }) => {
               )
             })
           }
+          <AddEmail/>
         </ul>
-        <AddEmail/>
       </section>
     )
   }
 
   const AddEmail = () => {
     return(
-      <div>
-        <input type='text' placeholder='New email'
-        ></input>
-        
-        <div className="add-email" onClick={()=>addEmail}>
+      <div className='new-emails'>
+        {
+          newEmails.map(newEmail=>{
+            return(
+              <input type='text' placeholder='New email' 
+              value={newEmail}
+              onChange={()=>editNewEmail}
+              ></input>
+            )
+          })
+        }
+        <div className="add-email" onClick={()=>addEmail()}>
           <div>
             <FontAwesomeIcon icon={faPlusCircle} />
           </div>  

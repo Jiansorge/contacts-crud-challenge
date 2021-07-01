@@ -134,6 +134,12 @@ li.deselected .contact-delete-email{
   display: none;
 }
 
+.new-emails{
+  display: flex;
+  flex-direction: column;
+  width:max-content;
+}
+
 .contact-emails input {
   margin: 6px 0;
 }

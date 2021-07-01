@@ -48,7 +48,9 @@ function App() {
       .then( response =>response.json())
       .then(data=>{
         setContacts(data.contacts)
-        setContact(data.contacts[0])
+        if (Object.keys(contact).length === 0 ){
+          setContact(data.contacts[0])
+        }
       })
       .then(setIsLoading(false))
       .catch(error => {
