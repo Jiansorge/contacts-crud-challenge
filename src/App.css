@@ -43,14 +43,14 @@ li.contact-list__item{
 }
 
 li.contact-list__item:hover{
-  background-color: var(--main-primary-color-);
+  background-color: var(--main-primary-color);
 }
 
 header {
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  color: var(--main-primary-color-);
+  color: var(--main-primary-color);
   font-size:24px;
 }
 
@@ -191,7 +191,7 @@ button.cancel{
 
 button.save{
   color:white;
-  background-color: var(--main-primary-color-)
+  background-color: var(--main-primary-color);
 }
 
 button.disabled{

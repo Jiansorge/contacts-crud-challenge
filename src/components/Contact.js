@@ -62,7 +62,6 @@ const Contact = ({ contact, isLoading, editContact }) => {
               value={newEmail}
               onChange={()=>editNewEmail}
               key={`new-email-${index}`}
-              autoFocus
               ></input>
             )
           })
