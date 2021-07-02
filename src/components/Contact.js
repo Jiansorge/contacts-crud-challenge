@@ -28,27 +28,6 @@ const Contact = ({ contact, isLoading, editContact }) => {
 
   }
 
-  const EditName = () =>{
-    return(
-      <section className="edit-name">
-        <div className="edit-name__first">
-          <label htmlFor="contact-first-name" >First Name</label>
-          <input type="text" id="contact-first-name" name="first-name" 
-          onChange={(e)=>setFirstName(e.target.value)}
-          value={firstName}
-          />
-        </div>
-        <div className="edit-name__last">
-          <label htmlFor="contact-last-name">Last Name</label>
-          <input type="text" id="contact-last-name" name="last-name" 
-          onChange={(e)=>setLastName(e.target.value)}
-          value={lastName}
-          />
-          </div>
-      </section>
-    )
-  }
-
   const EditEmails = () => {
     return(
       <section name="contact-emails" className="contact-emails">
@@ -77,11 +56,13 @@ const Contact = ({ contact, isLoading, editContact }) => {
     return(
       <div className='new-emails'>
         {
-          newEmails.map(newEmail=>{
+          newEmails.map((newEmail,index)=>{
             return(
               <input type='text' placeholder='New email' 
               value={newEmail}
               onChange={()=>editNewEmail}
+              key={`new-email-${index}`}
+              autoFocus
               ></input>
             )
           })
@@ -136,6 +117,7 @@ const Contact = ({ contact, isLoading, editContact }) => {
     console.log("emails in state",emails)
   },[emails])
 
+  console.log("rerendering contact")
   return (
     <form className="contact"
     onSubmit={(e)=>handleSubmit(e)}
@@ -143,7 +125,23 @@ const Contact = ({ contact, isLoading, editContact }) => {
       {
         !isLoading && 
         <fieldset>
-          <EditName/>
+          <section className="edit-name">
+            <div className="edit-name__first">
+              <label htmlFor="contact-first-name" >First Name</label>
+              <input type="text" id="contact-first-name" name="first-name" 
+              onChange={(e)=>setFirstName(e.target.value)}
+              value={firstName}
+              autoFocus
+              />
+            </div>
+            <div className="edit-name__last">
+              <label htmlFor="contact-last-name">Last Name</label>
+              <input type="text" id="contact-last-name" name="last-name" 
+              onChange={(e)=>setLastName(e.target.value)}
+              value={lastName}
+              />
+              </div>
+          </section>
           <EditEmails/>
           <CrudButtons/>
         </fieldset>
