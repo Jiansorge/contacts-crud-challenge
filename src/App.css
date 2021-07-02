@@ -1,5 +1,8 @@
 :root{
-  --main-bg-color:brown;
+  --main-bg-color:rgb(248,250,255);
+  --main-primary-color:rgb(91,156,252);
+  --main-secondary-color:rgb(85,85,85);
+  --main-error-color:rgb(252,89,91);
 }
 
 *{
@@ -18,7 +21,7 @@
 .contact-list{
   display:flex;
   flex-direction: column;
-  background-color: rgb(248,250,255);
+  background-color: var(--main-bg-color);
 }
 
 .contact-list__icon{
@@ -40,14 +43,14 @@ li.contact-list__item{
 }
 
 li.contact-list__item:hover{
-  background-color: rgb(91,156,252);
+  background-color: var(--main-primary-color-);
 }
 
 header {
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  color: rgb(91,156,252);
+  color: var(--main-primary-color-);
   font-size:24px;
 }
 
@@ -73,9 +76,9 @@ fieldset{
 }
 
 input{
-  background-color: rgb(249,251,255);
+  background-color: var(--main-bg-color);
   border: 1px solid rgb(230,240,254);
-  color: rgb(85,85,85);
+  color: var(--main-secondary-color);
   padding: 7px;
 }
 
@@ -95,7 +98,7 @@ input{
   display: flex;
   flex-direction: column;
   padding: 0 20px;
-  color: rgb(85,85,85);
+  color: var(--main-secondary-color);
 }
 
 .contact-emails label{
@@ -116,8 +119,9 @@ input{
 
 li.deselected{
   text-decoration: line-through;
-  color:rgb(252,89,91,0.9);
+  color:var(--main-error-color);
   font-style: italic;
+  opacity:0.9;
 }
 
 .contact-delete-email{
@@ -147,7 +151,7 @@ li.deselected .contact-delete-email{
 .add-email {
   display: flex;
   align-items: center;
-  color: rgb(91,156,252);
+  color: var(--main-primary-color);
   font-size: 14px;
   cursor: pointer;
 }
@@ -176,18 +180,18 @@ li.deselected .contact-delete-email{
 
 button.delete{
   color:white;
-  background-color: rgb(252,89,91);
+  background-color: var(--main-error-color);
   align-self:flex-start;
 }
 
 button.cancel{
-  background-color: rgb(249,251,255);
+  background-color: var(--main-bg-color);
   border: 1px solid rgb(140,186,252);
 }
 
 button.save{
   color:white;
-  background-color: rgb(91,156,252);
+  background-color: var(--main-primary-color-)
 }
 
 button.disabled{
