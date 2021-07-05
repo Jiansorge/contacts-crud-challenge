@@ -42,6 +42,14 @@ li.contact-list__item{
   width:100%;
 }
 
+li.new {
+  color:var(--main-primary-color);
+}
+
+li.selected{
+  background-color: var(--main-primary-color);
+}
+
 li.contact-list__item:hover{
   background-color: var(--main-primary-color);
 }

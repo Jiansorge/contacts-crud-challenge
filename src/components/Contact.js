@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import Email from './Email';
-const Contact = ({ contact, isLoading, editContact }) => {
+const Contact = ({ contact, isLoading, editContact, saveNewContact }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
   const [emails, setEmails] = useState(contact?.emails);
@@ -58,10 +58,12 @@ const Contact = ({ contact, isLoading, editContact }) => {
         {
           newEmails.map((newEmail,index)=>{
             return(
-              <input type='text' placeholder='New email' 
+              <input type='text' 
+              placeholder='Enter new email...' 
               value={newEmail}
               onChange={()=>editNewEmail}
               key={`new-email-${index}`}
+              // required
               ></input>
             )
           })
@@ -78,14 +80,18 @@ const Contact = ({ contact, isLoading, editContact }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    editContact(contact.id, createBody())
+    if (!!contact.new && contact.new){
+      saveNewContact(createBody())
+    } else {
+      editContact(contact.id, createBody())
+    }
   }
 
   const createBody = () =>{
     const body = {
       'firstName': firstName,
       'lastName': lastName,
-      'emails': emails
+      'emails': emails,
     }
     return body
   }
@@ -119,7 +125,7 @@ const Contact = ({ contact, isLoading, editContact }) => {
   console.log("rerendering contact")
   return (
     <form className="contact"
-    onSubmit={(e)=>handleSubmit(e)}
+    onSubmit={(e)=>{handleSubmit(e)}}
     >
       {
         !isLoading && 
@@ -128,16 +134,24 @@ const Contact = ({ contact, isLoading, editContact }) => {
             <div className="edit-name__first">
               <label htmlFor="contact-first-name" >First Name</label>
               <input type="text" id="contact-first-name" name="first-name" 
-              onChange={(e)=>setFirstName(e.target.value)}
+              onChange={(e)=>{
+                setFirstName(e.target.value)
+              }}
               value={firstName}
+              placeholder="Enter first name..."
+              required
               autoFocus
               />
             </div>
             <div className="edit-name__last">
               <label htmlFor="contact-last-name">Last Name</label>
               <input type="text" id="contact-last-name" name="last-name" 
-              onChange={(e)=>setLastName(e.target.value)}
+              onChange={(e)=>{
+                setLastName(e.target.value)
+              }}
               value={lastName}
+              placeholder="Enter last name..."
+              required
               />
               </div>
           </section>
