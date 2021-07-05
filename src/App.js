@@ -11,7 +11,6 @@ function App() {
 
   const selectContact=(contactId)=>{
     setContact(contacts.find(person=>person.id===contactId))
-    console.log('selected:', contact)
   }
 
   const editContact=(contactId, body)=>{
@@ -35,9 +34,29 @@ function App() {
         .catch(e=>console.log(e))
     }
 
-  // const deleteContact=(contactId)=>{
-
-  // }
+  const deleteContact=(contactId)=>{
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    };
+    console.log("request options", requestOptions)
+    fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
+        .then(data => {
+          const tempData = contacts
+          const tempIndex = tempData.findIndex(person=>person.id===contactId)
+          tempData.splice(tempIndex,1)
+          setContact(contacts[0] || {
+            firstName: "",
+            lastName: "",
+            emails: []
+          })
+          setContacts(tempData)
+          console.log("tempData",tempData)
+          console.log('removed contact',data)
+      })
+        .then(setIsLoading(true))
+        .catch(e=>console.log(e))
+  }
 
   const addContact=()=>{
     console.log("adding contact")
@@ -105,6 +124,7 @@ function App() {
         <Contact contact={contact} isLoading={isLoading}
           editContact={editContact}
           saveNewContact={saveNewContact}
+          deleteContact={deleteContact}
           />
     </div>
   )

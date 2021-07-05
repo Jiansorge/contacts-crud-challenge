@@ -16,6 +16,7 @@ const ContactList = ({ isLoading, contacts, contact, selectContact, addContact }
               return(
                 <li className={`contact-list__item ${contact.id === person.id && 'selected'}`}
                 onClick={()=>selectContact(person.id)}
+                key={`new-contact-${person.id}`}
                 >
                   {person.firstName} {person.lastName}
                 </li>
@@ -25,7 +26,6 @@ const ContactList = ({ isLoading, contacts, contact, selectContact, addContact }
         {
           !!contact && !!contact.new && contact.new
           && <li className={`contact-list__item new selected`}
-              key={`new-contact-${contact.id}`}
             >
               (new contact)
             </li>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import Email from './Email';
-const Contact = ({ contact, isLoading, editContact, saveNewContact }) => {
+const Contact = ({ contact, isLoading, editContact, saveNewContact, deleteContact }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
   const [emails, setEmails] = useState(contact?.emails);
@@ -35,7 +35,7 @@ const Contact = ({ contact, isLoading, editContact, saveNewContact }) => {
         <ul>
           {
             !!contact && !!contact.emails 
-            && Object.values(contact.emails).map((email,index)=> {
+            && contact.emails.map((email,index)=> {
               return(
                 <Email email={email} 
                   contact={contact} 
@@ -99,7 +99,9 @@ const Contact = ({ contact, isLoading, editContact, saveNewContact }) => {
   const CrudButtons = () => {
     return(
       <section className="crud-buttons">
-        <button className="delete">Delete</button>
+        <button className="delete"
+        onClick={()=>deleteContact(contact.id)}
+        >Delete</button>
         <div>
           <button className="cancel">Cancel</button>
           <button className="save" 
