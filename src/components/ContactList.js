@@ -14,7 +14,7 @@ const ContactList = ({ isLoading, contacts, contact, selectContact, addContact }
           })
           .map((person,index)=>{
               return(
-                <li className="contact-list__item" 
+                <li className={`contact-list__item ${contact.id === person.id && 'selected'}`}
                 onClick={()=>selectContact(person.id)}
                 >
                   {person.firstName} {person.lastName}
@@ -24,7 +24,7 @@ const ContactList = ({ isLoading, contacts, contact, selectContact, addContact }
         }
         {
           !!contact && !!contact.new && contact.new
-          && <li className="contact-list__item new"
+          && <li className={`contact-list__item new selected`}
               key={`new-contact-${contact.id}`}
             >
               (new contact)

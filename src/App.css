@@ -43,7 +43,7 @@ li.contact-list__item{
 }
 
 li.new {
-  color:var(--main-primary-color);
+  color:#ffffff;
 }
 
 li.selected{
@@ -51,7 +51,7 @@ li.selected{
 }
 
 li.contact-list__item:hover{
-  background-color: var(--main-primary-color);
+  background-color: rgb(91,156,252,0.3);
 }
 
 header {
