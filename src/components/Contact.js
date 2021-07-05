@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import Email from './Email';
-const Contact = ({ contact, isLoading, editContact, saveNewContact, deleteContact }) => {
+const Contact = ({ 
+    contact, 
+    isLoading, 
+    editContact, 
+    saveNewContact, 
+    deleteContact,
+    cancelChanges, }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
   const [emails, setEmails] = useState(contact?.emails);
@@ -80,6 +86,7 @@ const Contact = ({ contact, isLoading, editContact, saveNewContact, deleteContac
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("submitting")
     if (!!contact.new && contact.new){
       saveNewContact(createBody())
     } else {
@@ -89,8 +96,8 @@ const Contact = ({ contact, isLoading, editContact, saveNewContact, deleteContac
 
   const createBody = () =>{
     const body = {
-      'firstName': firstName,
-      'lastName': lastName,
+      'firstName': firstName.trim(),
+      'lastName': lastName.trim(),
       'emails': emails,
     }
     return body
@@ -101,9 +108,18 @@ const Contact = ({ contact, isLoading, editContact, saveNewContact, deleteContac
       <section className="crud-buttons">
         <button className="delete"
         onClick={()=>deleteContact(contact.id)}
+        type="button"
         >Delete</button>
         <div>
-          <button className="cancel">Cancel</button>
+          <button className="cancel"
+           onClick={()=>{
+              setFirstName(contact.firstName)
+              setLastName(contact.lastName)
+              setEmails(contact.emails)
+              cancelChanges(contact.id)
+             }}   
+           type="button"       
+          >Cancel</button>
           <button className="save" 
           type='submit'
           >Save</button>
@@ -130,8 +146,9 @@ const Contact = ({ contact, isLoading, editContact, saveNewContact, deleteContac
     onSubmit={(e)=>{handleSubmit(e)}}
     >
       {
-        !isLoading && 
-        <fieldset>
+        isLoading 
+        ? <h3 className="loading">Loading...</h3>
+        : <fieldset>
           <section className="edit-name">
             <div className="edit-name__first">
               <label htmlFor="contact-first-name" >First Name</label>
@@ -155,7 +172,7 @@ const Contact = ({ contact, isLoading, editContact, saveNewContact, deleteContac
               placeholder="Enter last name..."
               required
               />
-              </div>
+            </div>
           </section>
           <EditEmails/>
           <CrudButtons/>

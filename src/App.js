@@ -6,7 +6,12 @@ import ContactList from './components/ContactList';
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [contacts, setContacts] = useState([]);
-  const [contact, setContact] = useState({});
+  const [contact, setContact] = useState({
+    firstName:'',
+    lastName:'',
+    emails:[],
+    new:true
+  });
   // const [errorMessage, setErrorMessage] = useState(null);
 
   const selectContact=(contactId)=>{
@@ -25,38 +30,15 @@ function App() {
         .then(response => response.json())
         .then(data => {
           const tempData = contacts
-          tempData[tempData.findIndex(person=>person.id===contactId)] = data
+          tempData[tempData.findIndex(person=>person.id===data.id)] = data
           setContacts(tempData)
+          setContact(data)
           console.log("tempData",tempData)
           console.log('data',data)
       })
         .then(setIsLoading(true))
         .catch(e=>console.log(e))
     }
-
-  const deleteContact=(contactId)=>{
-    const requestOptions = {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-    };
-    console.log("request options", requestOptions)
-    fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
-        .then(data => {
-          const tempData = contacts
-          const tempIndex = tempData.findIndex(person=>person.id===contactId)
-          tempData.splice(tempIndex,1)
-          setContact(contacts[0] || {
-            firstName: "",
-            lastName: "",
-            emails: []
-          })
-          setContacts(tempData)
-          console.log("tempData",tempData)
-          console.log('removed contact',data)
-      })
-        .then(setIsLoading(true))
-        .catch(e=>console.log(e))
-  }
 
   const addContact=()=>{
     console.log("adding contact")
@@ -93,13 +75,56 @@ function App() {
         .catch(e=>console.log(e))
     }
 
+  const deleteContact=(contactId)=>{
+    if (contact.new){
+      setContact(contacts[0])
+    } else {
+      const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      };
+      console.log("request options", requestOptions)
+      fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
+          .then(data => {
+            const tempData = contacts
+            const tempIndex = tempData.findIndex(person=>person.id===contactId)
+            tempData.splice(tempIndex,1)
+            if (tempIndex-1 >= 0){
+              setContact(contacts[tempIndex-1])
+            } else if(tempIndex < tempData.length) {
+              setContact(contacts[tempIndex])
+            } else {
+              setContact({
+                firstName: "",
+                lastName: "",
+                emails: [],
+                new:true,
+              })
+            }
+            setContacts(tempData)
+            console.log("tempData",tempData)
+            console.log('removed contact',data)
+        })
+          .then(setIsLoading(true))
+          .catch(e=>console.log(e))
+      }
+  }
+
+  const cancelChanges = (id) => {
+    if(contact.new){
+      setContact(contacts[0])
+    } else {
+      setContact(contacts.find(person=>person.id === id))
+    }
+  }
+
   useEffect(() => {
     if(isLoading){
       fetch('https://avb-contacts-api.herokuapp.com/contacts/paginated')
       .then( response =>response.json())
       .then(data=>{
         setContacts(data.contacts)
-        if (Object.keys(contact).length === 0 ){
+        if (data.contacts.length > 0 && contact.firstName === ''){
           setContact(data.contacts[0])
         }
       })
@@ -121,10 +146,12 @@ function App() {
           addContact={addContact}
           contact={contact}
         />
-        <Contact contact={contact} isLoading={isLoading}
+        <Contact contact={contact} 
+          isLoading={isLoading}
           editContact={editContact}
           saveNewContact={saveNewContact}
           deleteContact={deleteContact}
+          cancelChanges={cancelChanges}
           />
     </div>
   )

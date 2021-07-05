@@ -70,6 +70,12 @@ header h1 {
 
 .contact{
   height: 100%;
+  width: 100%;
+}
+
+.loading{
+  padding: 70px 30px;
+  cursor:progress;
 }
 
 fieldset{

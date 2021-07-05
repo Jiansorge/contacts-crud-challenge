@@ -10,7 +10,10 @@ const ContactList = ({ isLoading, contacts, contact, selectContact, addContact }
         { 
           !isLoading && !!contacts && contacts.length > 0 
           && contacts.sort((a,b)=>{
-            return a.lastName[0].toUpperCase() > b.lastName[0].toUpperCase()
+            return a.firstName.toUpperCase() > b.firstName.toUpperCase()
+          })
+          .sort((a,b)=>{
+            return a.lastName.toUpperCase() > b.lastName.toUpperCase()
           })
           .map((person,index)=>{
               return(
