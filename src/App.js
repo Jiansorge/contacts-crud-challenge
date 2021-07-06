@@ -13,8 +13,10 @@ function App() {
     new:true
   });
   // const [errorMessage, setErrorMessage] = useState(null);
+  const [isEmailEditable, setIsEmailEditable] = useState(null);
 
   const selectContact=(contactId)=>{
+    setIsEmailEditable(null)
     setContact(contacts.find(person=>person.id===contactId))
   }
 
@@ -33,6 +35,7 @@ function App() {
           tempData[tempData.findIndex(person=>person.id===data.id)] = data
           setContacts(tempData)
           setContact(data)
+          setIsEmailEditable(null)
           console.log("tempData",tempData)
           console.log('data',data)
       })
@@ -50,6 +53,7 @@ function App() {
       'id': Date.now()
     }
     setContact(newContact)
+    setIsEmailEditable(null)
     console.log('added contact?', contact)
   }
 
@@ -68,6 +72,7 @@ function App() {
           tempData.push(data)
           setContacts(tempData)
           setContact(data)
+          setIsEmailEditable(null)
           console.log("tempData",tempData)
           console.log('data',data)
       })
@@ -102,6 +107,7 @@ function App() {
               })
             }
             setContacts(tempData)
+            setIsEmailEditable(null)
             console.log("tempData",tempData)
             console.log('removed contact',data)
         })
@@ -116,6 +122,7 @@ function App() {
     } else {
       setContact(contacts.find(person=>person.id === id))
     }
+    setIsEmailEditable(null)
   }
 
   useEffect(() => {
@@ -139,7 +146,8 @@ function App() {
   }, [contacts, isLoading]);
 
   return (
-    <div className="app">
+    <div className="app"
+    >
         <ContactList isLoading={isLoading} 
           contacts={contacts} 
           selectContact={selectContact}
@@ -152,6 +160,8 @@ function App() {
           saveNewContact={saveNewContact}
           deleteContact={deleteContact}
           cancelChanges={cancelChanges}
+          isEmailEditable={isEmailEditable}
+          setIsEmailEditable={setIsEmailEditable}
           />
     </div>
   )

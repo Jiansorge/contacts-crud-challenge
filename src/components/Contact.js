@@ -8,11 +8,13 @@ const Contact = ({
     editContact, 
     saveNewContact, 
     deleteContact,
-    cancelChanges, }) => {
+    cancelChanges, 
+    isEmailEditable,
+    setIsEmailEditable}) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
   const [emails, setEmails] = useState(contact?.emails);
-  const [newEmails, setNewEmails] = useState(['','']);
+  const [newEmails, setNewEmails] = useState([]);
 
   const toggleEmail = (email, index, isEnabled) => {
     const tempEmails = emails
@@ -26,7 +28,7 @@ const Contact = ({
   }
 
   const addEmail = () => {
-    setNewEmails(newEmails.push(''))
+    setNewEmails(prevState=> [...prevState,''])
     console.log("new emails", newEmails)
   }
 
@@ -48,39 +50,35 @@ const Contact = ({
                   index={index} 
                   toggleEmail={toggleEmail}
                   key={`contact-${contact.id}-email-${index}`}
+                  isEmailEditable={isEmailEditable}
+                  setIsEmailEditable={setIsEmailEditable}
                 />
               )
             })
           }
-          <AddEmail/>
+          {
+            newEmails.map((newEmail,index)=>{
+              return(
+                <li>
+                  <input type='text' 
+                  placeholder='Enter new email...' 
+                  value={newEmail}
+                  onChange={()=>editNewEmail}
+                  key={`new-email-${index}`}
+                  // required
+                  />
+                </li>
+              )
+            })
+          }
+          <li className="add-email" onClick={()=>addEmail()}>
+            <div>
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </div>  
+            <p>add email</p>
+          </li>
         </ul>
       </section>
-    )
-  }
-
-  const AddEmail = () => {
-    return(
-      <div className='new-emails'>
-        {
-          newEmails.map((newEmail,index)=>{
-            return(
-              <input type='text' 
-              placeholder='Enter new email...' 
-              value={newEmail}
-              onChange={()=>editNewEmail}
-              key={`new-email-${index}`}
-              // required
-              ></input>
-            )
-          })
-        }
-        <div className="add-email" onClick={()=>addEmail()}>
-          <div>
-            <FontAwesomeIcon icon={faPlusCircle} />
-          </div>  
-          <p>add email</p>
-        </div>
-      </div>
     )
   }
 
