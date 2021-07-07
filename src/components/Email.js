@@ -20,12 +20,11 @@ const Email = ({
       setIsEnabled(!isEnabled)
     }}
     >
-      <p
-        className="contact-email"
-        >
-            {email}
-        </p>
-      
+      <p className="contact-email"
+      >
+        {email}
+      </p>
+    
       {
         isEnabled
         ?<span className="contact-delete-email"
