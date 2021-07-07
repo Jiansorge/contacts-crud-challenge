@@ -86,7 +86,7 @@ const Contact = ({
   }
 
   useEffect(() => {
-    if(!!contact && firstName !== contact.firstName){
+    if(!!contact){
       setFirstName(contact.firstName)
       setLastName(contact.lastName)
       setEmails(contact.emails)

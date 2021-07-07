@@ -79,9 +79,9 @@ function App() {
             const tempIndex = tempData.findIndex(person=>person.id===contactId)
             tempData.splice(tempIndex,1)
             if (tempIndex-1 >= 0){
-              setContact(contacts[tempIndex-1])
-            } else if(tempIndex < tempData.length) {
-              setContact(contacts[tempIndex])
+              setContact(tempData[tempIndex-1])
+            } else if(tempData.length===1) {
+              setContact(tempData[0])
             } else {
               setContact({
                 firstName: "",
