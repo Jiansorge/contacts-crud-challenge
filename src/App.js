@@ -24,8 +24,6 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     };
-    console.log("body",body)
-    console.log("request options", requestOptions)
     fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
         .then(response => response.json())
         .then(data => {
@@ -33,15 +31,12 @@ function App() {
           tempData[tempData.findIndex(person=>person.id===data.id)] = data
           setContacts(tempData)
           setContact(data)
-          console.log("tempData",tempData)
-          console.log('data',data)
-      })
+         })
         .then(setIsLoading(true))
         .catch(e=>console.log(e))
     }
 
   const addContact=()=>{
-    console.log("adding contact")
     const newContact = {
       'firstName':'',
       'lastName':'',
@@ -50,7 +45,6 @@ function App() {
       'id': Date.now()
     }
     setContact(newContact)
-    console.log('added contact?', contact)
   }
 
   const saveNewContact=(body)=> {
@@ -59,8 +53,6 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     };
-    console.log("body",body)
-    console.log("request options", requestOptions)
     fetch(`https://avb-contacts-api.herokuapp.com/contacts/`, requestOptions)
         .then(response => response.json())
         .then(data => {
@@ -68,8 +60,6 @@ function App() {
           tempData.push(data)
           setContacts(tempData)
           setContact(data)
-          console.log("tempData",tempData)
-          console.log('data',data)
       })
         .then(setIsLoading(true))
         .catch(e=>console.log(e))
@@ -83,7 +73,6 @@ function App() {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       };
-      console.log("request options", requestOptions)
       fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
           .then(data => {
             const tempData = [...contacts]
@@ -102,8 +91,6 @@ function App() {
               })
             }
             setContacts(tempData)
-            console.log("tempData",tempData)
-            console.log('removed contact',data)
         })
           .then(setIsLoading(true))
           .catch(e=>console.log(e))
@@ -134,8 +121,6 @@ function App() {
           console.error('There was an error!', error);
       });
     }
-    console.log("contacts",contacts)
-    console.log("contact",contact)
   }, [contacts, isLoading]);
 
   return (

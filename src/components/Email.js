@@ -11,8 +11,6 @@ const Email = ({
   }) => {
   const [isEnabled, setIsEnabled] = useState(true);
 
-
-  console.log('rerendering email')
   return (
     <li className={isEnabled? '': 'deselected'}
     onClick={()=>{

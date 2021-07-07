@@ -29,7 +29,6 @@ const Contact = ({
 
   const addEmail = () => {
     setNewEmails(prevState=> [...prevState,''])
-    console.log("new emails", newEmails)
   }
 
 
@@ -53,7 +52,6 @@ const Contact = ({
   const createBody = () =>{
     const allEmails = [...emails]
     allEmails.push(...newEmails.filter(em=>em.length>4))
-    console.log('all emails', allEmails)
     const body = {
       'firstName': firstName.trim(),
       'lastName': lastName.trim(),
@@ -96,11 +94,6 @@ const Contact = ({
     }
   }, [contact]);
 
-  useEffect(()=>{
-    console.log("emails in state",emails)
-  },[emails])
-
-  console.log("rerendering contact")
   return (
     <form className="contact"
     onSubmit={(e)=>{handleSubmit(e)}}
@@ -159,7 +152,8 @@ const Contact = ({
                       value={newEmail}
                       onChange={(e)=>editNewEmail(e, index)}
                       key={`new-email-${index}`}
-                      // required
+                      type='email'
+                      required
                       />
                       <span className="contact-delete-email"
                           onClick={()=>{
