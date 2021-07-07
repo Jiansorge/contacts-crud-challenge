@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { RiDeleteBack2Fill  } from 'react-icons/ri';
 import Email from './Email';
 const Contact = ({ 
     contact, 
@@ -160,6 +161,13 @@ const Contact = ({
                       key={`new-email-${index}`}
                       // required
                       />
+                      <span className="contact-delete-email"
+                          onClick={()=>{
+                            const tempNewEmails = [...newEmails]
+                            tempNewEmails.splice(index, 1)
+                            setNewEmails(tempNewEmails)
+                          }}
+                      ><RiDeleteBack2Fill/></span>
                     </li>
                   )
                 })
