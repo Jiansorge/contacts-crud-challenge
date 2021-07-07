@@ -15,18 +15,17 @@ const Email = ({
   console.log('rerendering email')
   return (
     <li className={isEnabled? '': 'deselected'}
-    ref={container}
     onClick={()=>{
-      toggleEmail(email, index, isEnabled, isNew)
+      toggleEmail(email, index, isEnabled)
       setIsEnabled(!isEnabled)
     }}
     >
-      {
+      <p
         className="contact-email"
         >
             {email}
         </p>
-      }
+      
       {
         isEnabled
         ?<span className="contact-delete-email"

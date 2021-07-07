@@ -42,14 +42,16 @@ const Contact = ({
     e.preventDefault();
     if (!!contact.new && contact.new){
       saveNewContact(createBody())
+      setNewEmails([])
     } else {
       editContact(contact.id, createBody())
+      setNewEmails([])
     }
   }
 
   const createBody = () =>{
     const allEmails = [...emails]
-    allEmails.push(...newEmails)
+    allEmails.push(...newEmails.filter(em=>em.length>4))
     console.log('all emails', allEmails)
     const body = {
       'firstName': firstName.trim(),
