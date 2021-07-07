@@ -123,10 +123,12 @@ input{
 .contact-emails ul {
   list-style-type: none;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
 }
 
 .contact-emails li{
-  padding: 7px 0;
+  padding: 2px 0;
   cursor: pointer;
   display: flex;
 }
@@ -144,12 +146,16 @@ li.deselected{
   display: none;
 }
 
-li:hover .contact-delete-email{
-  display: block;
+.contact-restore-email{
+  padding: 0 5px ;
+  display: none;
+  color: black;
 }
 
-li.deselected .contact-delete-email{
-  display: none;
+li:hover .contact-delete-email,
+li:hover .contact-restore-email{
+  display: flex;
+  align-items: center;
 }
 
 .new-emails{
@@ -158,8 +164,12 @@ li.deselected .contact-delete-email{
   width:max-content;
 }
 
-.contact-emails input {
-  margin: 6px 0;
+input.contact-email {
+  width:fit-content;
+}
+
+p.contact-email{
+  padding: 7.5px;
 }
 
 .add-email {

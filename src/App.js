@@ -13,10 +13,8 @@ function App() {
     new:true
   });
   // const [errorMessage, setErrorMessage] = useState(null);
-  const [isEmailEditable, setIsEmailEditable] = useState(null);
 
   const selectContact=(contactId)=>{
-    setIsEmailEditable(null)
     setContact(contacts.find(person=>person.id===contactId))
   }
 
@@ -31,11 +29,10 @@ function App() {
     fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
         .then(response => response.json())
         .then(data => {
-          const tempData = contacts
+          const tempData = [...contacts]
           tempData[tempData.findIndex(person=>person.id===data.id)] = data
           setContacts(tempData)
           setContact(data)
-          setIsEmailEditable(null)
           console.log("tempData",tempData)
           console.log('data',data)
       })
@@ -53,7 +50,6 @@ function App() {
       'id': Date.now()
     }
     setContact(newContact)
-    setIsEmailEditable(null)
     console.log('added contact?', contact)
   }
 
@@ -68,11 +64,10 @@ function App() {
     fetch(`https://avb-contacts-api.herokuapp.com/contacts/`, requestOptions)
         .then(response => response.json())
         .then(data => {
-          const tempData = contacts
+          const tempData = [...contacts]
           tempData.push(data)
           setContacts(tempData)
           setContact(data)
-          setIsEmailEditable(null)
           console.log("tempData",tempData)
           console.log('data',data)
       })
@@ -91,7 +86,7 @@ function App() {
       console.log("request options", requestOptions)
       fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
           .then(data => {
-            const tempData = contacts
+            const tempData = [...contacts]
             const tempIndex = tempData.findIndex(person=>person.id===contactId)
             tempData.splice(tempIndex,1)
             if (tempIndex-1 >= 0){
@@ -107,7 +102,6 @@ function App() {
               })
             }
             setContacts(tempData)
-            setIsEmailEditable(null)
             console.log("tempData",tempData)
             console.log('removed contact',data)
         })
@@ -122,7 +116,6 @@ function App() {
     } else {
       setContact(contacts.find(person=>person.id === id))
     }
-    setIsEmailEditable(null)
   }
 
   useEffect(() => {
@@ -160,8 +153,6 @@ function App() {
           saveNewContact={saveNewContact}
           deleteContact={deleteContact}
           cancelChanges={cancelChanges}
-          isEmailEditable={isEmailEditable}
-          setIsEmailEditable={setIsEmailEditable}
           />
     </div>
   )

@@ -9,15 +9,14 @@ const Contact = ({
     saveNewContact, 
     deleteContact,
     cancelChanges, 
-    isEmailEditable,
-    setIsEmailEditable}) => {
+    }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
   const [emails, setEmails] = useState(contact?.emails);
   const [newEmails, setNewEmails] = useState([]);
 
   const toggleEmail = (email, index, isEnabled) => {
-    const tempEmails = emails
+    const tempEmails =  [...emails]
     if (isEnabled){
       tempEmails.splice(index, 1)
       setEmails(tempEmails)
@@ -32,59 +31,15 @@ const Contact = ({
     console.log("new emails", newEmails)
   }
 
-  const editNewEmail = () => {
 
-  }
-
-  const EditEmails = () => {
-    return(
-      <section name="contact-emails" className="contact-emails">
-        <label htmlFor="contact-emails">Email</label>
-        <ul>
-          {
-            !!contact && !!contact.emails 
-            && contact.emails.map((email,index)=> {
-              return(
-                <Email email={email} 
-                  contact={contact} 
-                  index={index} 
-                  toggleEmail={toggleEmail}
-                  key={`contact-${contact.id}-email-${index}`}
-                  isEmailEditable={isEmailEditable}
-                  setIsEmailEditable={setIsEmailEditable}
-                />
-              )
-            })
-          }
-          {
-            newEmails.map((newEmail,index)=>{
-              return(
-                <li>
-                  <input type='text' 
-                  placeholder='Enter new email...' 
-                  value={newEmail}
-                  onChange={()=>editNewEmail}
-                  key={`new-email-${index}`}
-                  // required
-                  />
-                </li>
-              )
-            })
-          }
-          <li className="add-email" onClick={()=>addEmail()}>
-            <div>
-              <FontAwesomeIcon icon={faPlusCircle} />
-            </div>  
-            <p>add email</p>
-          </li>
-        </ul>
-      </section>
-    )
+  const editNewEmail = (e, index) => {
+    const tempEmails = [...newEmails]
+     tempEmails[index] = e.target.value
+    setNewEmails(tempEmails)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submitting")
     if (!!contact.new && contact.new){
       saveNewContact(createBody())
     } else {
@@ -93,10 +48,13 @@ const Contact = ({
   }
 
   const createBody = () =>{
+    const allEmails = [...emails]
+    allEmails.push(...newEmails)
+    console.log('all emails', allEmails)
     const body = {
       'firstName': firstName.trim(),
       'lastName': lastName.trim(),
-      'emails': emails,
+      'emails': allEmails,
     }
     return body
   }
@@ -110,13 +68,13 @@ const Contact = ({
         >Delete</button>
         <div>
           <button className="cancel"
-           onClick={()=>{
+            onClick={()=>{
               setFirstName(contact.firstName)
               setLastName(contact.lastName)
               setEmails(contact.emails)
               cancelChanges(contact.id)
-             }}   
-           type="button"       
+            }}   
+            type="button"       
           >Cancel</button>
           <button className="save" 
           type='submit'
@@ -127,10 +85,11 @@ const Contact = ({
   }
 
   useEffect(() => {
-    if(!!contact){
+    if(!!contact && firstName !== contact.firstName){
       setFirstName(contact.firstName)
       setLastName(contact.lastName)
       setEmails(contact.emails)
+      setNewEmails([])
     }
   }, [contact]);
 
@@ -172,7 +131,45 @@ const Contact = ({
               />
             </div>
           </section>
-          <EditEmails/>
+          <section name="contact-emails" className="contact-emails">
+            <label htmlFor="contact-emails">Email</label>
+            <ul>
+              {
+                !!contact && !!contact.emails 
+                && contact.emails.map((email,index)=> {
+                  return(
+                    <Email email={email} 
+                      contact={contact} 
+                      index={index} 
+                      toggleEmail={toggleEmail}
+                      key={`contact-${contact.id}-email-${index}`}
+                    />
+                  )
+                })
+              }
+              {
+                newEmails.map((newEmail,index)=>{
+                  return(
+                    <li>
+                      <input type='text' 
+                      placeholder='Enter new email...' 
+                      value={newEmail}
+                      onChange={(e)=>editNewEmail(e, index)}
+                      key={`new-email-${index}`}
+                      // required
+                      />
+                    </li>
+                  )
+                })
+              }
+              <li className="add-email" onClick={()=>addEmail()}>
+                <div>
+                  <FontAwesomeIcon icon={faPlusCircle} />
+                </div>  
+                <p>add email</p>
+              </li>
+            </ul>
+          </section>
           <CrudButtons/>
         </fieldset>
       }

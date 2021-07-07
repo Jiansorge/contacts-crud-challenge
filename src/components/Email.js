@@ -1,69 +1,40 @@
 import React, { useState } from 'react';
 import '../App.css'
 import { RiDeleteBack2Fill  } from 'react-icons/ri';
+import { AiOutlineUndo } from 'react-icons/ai';
 
 
 const Email = ({
     email, 
-    contact, 
     index, 
     toggleEmail,
-    isEmailEditable, 
-    setIsEmailEditable,
   }) => {
   const [isEnabled, setIsEnabled] = useState(true);
-  const container = React.useRef(null);
-  
-  function useEmailDeselector(ref) {
-    React.useEffect(() => {
-      if (isEmailEditable === index){
-        function handleOutsideClick(event) {
-          if (ref.current && !ref.current.contains(event.target)) {
-            setIsEmailEditable(null)
-          }
-        }
-        document.addEventListener("click", handleOutsideClick);        
-        return () => {
-          document.removeEventListener("click", handleOutsideClick)
-        }
-      }
-    } , [ref]);
-  }
 
-  useEmailDeselector(container)
 
+  console.log('rerendering email')
   return (
-  <li className={isEnabled? '': 'deselected'}
-  ref={container}
-  >
-    {
-      (isEmailEditable===index)
-      ? <input type='text' 
-      placeholder='Enter new email...' 
-      value={email}
-      //onChange={()=>}
-      key={`new-email-${index}`}
-      // required
-      />
-      : <p  onClick={()=>{
-        setIsEmailEditable(index)
-      }}
-      >
-        {email}
-      </p>
-    }
-
-    <span className="contact-delete-email"
+    <li className={isEnabled? '': 'deselected'}
+    ref={container}
     onClick={()=>{
-      // if(email){
-        
-      // }{
-        setIsEnabled(!isEnabled)
-        toggleEmail(email, index, isEnabled)
-      // }
+      toggleEmail(email, index, isEnabled, isNew)
+      setIsEnabled(!isEnabled)
     }}
-    ><RiDeleteBack2Fill/></span>
-  </li>
+    >
+      {
+        className="contact-email"
+        >
+            {email}
+        </p>
+      }
+      {
+        isEnabled
+        ?<span className="contact-delete-email"
+        ><RiDeleteBack2Fill/></span>
+        : <span className="contact-restore-email"
+        ><AiOutlineUndo/></span>
+      }
+    </li>
   );
 }
 
