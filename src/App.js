@@ -6,13 +6,21 @@ import ContactList from './components/ContactList';
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [contacts, setContacts] = useState([]);
-  const [contact, setContact] = useState({
-    firstName:'',
-    lastName:'',
-    emails:[],
-    new:true
-  });
   // const [errorMessage, setErrorMessage] = useState(null);
+
+  const newContact = () => {
+    return (
+      {
+        'firstName':'',
+        'lastName':'',
+        'emails':[],
+        'new':true,
+        'id': Date.now()
+      }
+    )
+  }
+
+  const [contact, setContact] = useState(newContact());
 
   const selectContact=(contactId)=>{
     setContact(contacts.find(person=>person.id===contactId))
@@ -37,14 +45,7 @@ function App() {
     }
 
   const addContact=()=>{
-    const newContact = {
-      'firstName':'',
-      'lastName':'',
-      'emails':[],
-      'new':true,
-      'id': Date.now()
-    }
-    setContact(newContact)
+    setContact(newContact())
   }
 
   const saveNewContact=(body)=> {
@@ -78,17 +79,12 @@ function App() {
             const tempData = [...contacts]
             const tempIndex = tempData.findIndex(person=>person.id===contactId)
             tempData.splice(tempIndex,1)
-            if (tempIndex-1 >= 0){
-              setContact(tempData[tempIndex-1])
-            } else if(tempData.length===1) {
+            if (tempIndex !== tempData.length-1 && tempData.length >0){
+              setContact(tempData[tempIndex])
+            } else if(tempData.length > 0) {
               setContact(tempData[0])
             } else {
-              setContact({
-                firstName: "",
-                lastName: "",
-                emails: [],
-                new:true,
-              })
+              setContact(newContact())
             }
             setContacts(tempData)
         })
@@ -99,9 +95,9 @@ function App() {
 
   const cancelChanges = (id) => {
     if(contact.new){
-      setContact(contacts[0])
+      selectContact(0)
     } else {
-      setContact(contacts.find(person=>person.id === id))
+      selectContact(id)
     }
   }
 
@@ -111,7 +107,7 @@ function App() {
       .then( response =>response.json())
       .then(data=>{
         setContacts(data.contacts)
-        if (data.contacts.length > 0 && contact.firstName === ''){
+        if (data.contacts.length > 0 && !!contact ){
           setContact(data.contacts[0])
         }
       })
@@ -121,8 +117,17 @@ function App() {
           console.error('There was an error!', error);
       });
     }
-  }, [contacts, isLoading]);
+  }, [contacts, contact, isLoading]);
 
+  useEffect(()=>{
+   if(contact === undefined && !!contacts){
+      setContact(contacts[0])
+    } else if (contact === undefined && contacts.length === 0) {
+      setContact(newContact())
+    }
+  })
+
+  console.log("contacts",contacts)
   return (
     <div className="app"
     >

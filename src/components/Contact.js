@@ -64,8 +64,8 @@ const Contact = ({
     return(
       <section className="crud-buttons">
         <button className="delete"
-        onClick={()=>deleteContact(contact.id)}
-        type="button"
+          onClick={()=>deleteContact(contact.id)}
+         type="button"
         >Delete</button>
         <div>
           <button className="cancel"
@@ -73,6 +73,7 @@ const Contact = ({
               setFirstName(contact.firstName)
               setLastName(contact.lastName)
               setEmails(contact.emails)
+              setNewEmails([])
               cancelChanges(contact.id)
             }}   
             type="button"       
@@ -90,10 +91,16 @@ const Contact = ({
       setFirstName(contact.firstName)
       setLastName(contact.lastName)
       setEmails(contact.emails)
-      setNewEmails([])
+    } else {
+      setFirstName('')
+      setLastName('')
+      setEmails([])
     }
+    setNewEmails([])
   }, [contact]);
 
+
+  console.log("contact",contact)
   return (
     <form className="contact"
     onSubmit={(e)=>{handleSubmit(e)}}
@@ -146,8 +153,8 @@ const Contact = ({
               {
                 newEmails.map((newEmail,index)=>{
                   return(
-                    <li>
-                      <input type='text' 
+                    <li key={`new-contact-${contact.id}-email-${index}`}>
+                      <input
                       placeholder='Enter new email...' 
                       value={newEmail}
                       onChange={(e)=>editNewEmail(e, index)}
