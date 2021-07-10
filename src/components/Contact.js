@@ -13,7 +13,7 @@ const Contact = ({
     }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
-  const [emails, setEmails] = useState([...contact?.emails]);
+  const [emails, setEmails] = useState([...contact.emails]);
   const [newEmails, setNewEmails] = useState([]);
 
   const toggleEmail = (email, isEnabled) => {

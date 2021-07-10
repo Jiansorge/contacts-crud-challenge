@@ -4,6 +4,7 @@ import Contact from './components/Contact';
 import ContactList from './components/ContactList';
 
 function App() {
+  const [isMounted, setIsMounted] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [contacts, setContacts] = useState([]);
 
@@ -26,21 +27,22 @@ function App() {
   }
 
   const editContact=(contactId, body)=>{
+    setIsLoading(true)
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     };
     fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          const tempData = [...contacts]
-          tempData[tempData.findIndex(person=>person.id===data.id)] = data
-          setContacts(tempData)
-          setContact(data)
-         })
-        .then(setIsLoading(true))
-        .catch(e=>console.log(e))
+      .then(response => response.json())
+      .then(data => {
+        const tempData = [...contacts]
+        tempData[tempData.findIndex(person=>person.id===data.id)] = data
+        setContacts(tempData)
+        setContact(data)
+      })
+      .then(setIsLoading(false))
+      .catch(e=>console.log(e))
     }
 
   const addContact=()=>{
@@ -48,24 +50,26 @@ function App() {
   }
 
   const saveNewContact=(body)=> {
+    setIsLoading(true)
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body) 
     };
     fetch(`https://avb-contacts-api.herokuapp.com/contacts/`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          const tempData = [...contacts]
-          tempData.push(data)
-          setContacts(tempData)
-          setContact(data)
+      .then(response => response.json())
+      .then(data => {
+        const tempData = [...contacts]
+        tempData.push(data)
+        setContacts(tempData)
+        setContact(data)
       })
-        .then(setIsLoading(true))
-        .catch(e=>console.log(e))
+      .then(setIsLoading(false))
+      .catch(e=>console.log(e))
     }
 
   const deleteContact=(contactId)=>{
+    setIsLoading(true)
     if (contact.new){
       setContact(contacts[0])
     } else {
@@ -74,34 +78,34 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
       };
       fetch(`https://avb-contacts-api.herokuapp.com/contacts/${contactId}`, requestOptions)
-          .then(data => {
-            const tempData = [...contacts]
-            const tempIndex = tempData.findIndex(person=>person.id===contactId)
-            tempData.splice(tempIndex,1)
-            if (tempIndex !== tempData.length-1 && tempData.length >0){
-              setContact(tempData[tempIndex])
-            } else if(tempData.length > 0) {
-              setContact(tempData[0])
-            } else {
-              setContact(newContact())
-            }
-            setContacts(tempData)
+        .then(data => {
+          const tempData = [...contacts]
+          const tempIndex = tempData.findIndex(person=>person.id===contactId)
+          tempData.splice(tempIndex,1)
+          if (tempIndex < tempData.length && tempData.length >0){
+            setContact(tempData[tempIndex])
+          } else if(tempData.length > 0) {
+            setContact(tempData[0])
+          } else {
+            setContact(newContact())
+          }
+          setContacts(tempData)
         })
-          .then(setIsLoading(true))
-          .catch(e=>console.log(e))
+        .then(setIsLoading(false))
+        .catch(e=>console.log(e))
       }
   }
 
   const cancelChanges = (id) => {
     if(contact.new){
-      selectContact(0)
+      setContact(contacts[0])
     } else {
       selectContact(id)
     }
   }
 
   useEffect(() => {
-    if(isLoading){
+    if(isMounted){
       fetch('https://avb-contacts-api.herokuapp.com/contacts/paginated')
       .then( response =>response.json())
       .then(data=>{
@@ -110,12 +114,13 @@ function App() {
           setContact(data.contacts[0])
         }
       })
+      .then(setIsMounted(false))
       .then(setIsLoading(false))
       .catch(error => {
         console.error('There was an error!', error);
       });
     }
-  }, [contacts, contact, isLoading]);
+  }, [contacts, contact, isMounted]);
 
   useEffect(()=>{
    if(contact === undefined && !!contacts){
