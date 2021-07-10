@@ -13,38 +13,18 @@ const Contact = ({
     }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
-  const [emails, setEmails] = useState([...contact?.emails.sort()]);
+  const [emails, setEmails] = useState([...contact?.emails]);
   const [newEmails, setNewEmails] = useState([]);
 
-  const toggleEmail = (email, contactEmailIndex, isEnabled) => {
+  const toggleEmail = (email, isEnabled) => {
     const tempEmails =  [...emails]
     if (isEnabled){
       const tempEmailIndex = tempEmails.findIndex(el=>el===email)
       tempEmails.splice(tempEmailIndex, 1)
       setEmails(tempEmails)
-      console.log("removed", email, "at temp index",tempEmailIndex)
     } else {
-      const tempEmailIndex = findTempEmailIndex(email, contactEmailIndex)
-      tempEmails.splice(tempEmailIndex, 0, email)
+      tempEmails.push(email)
       setEmails(tempEmails)
-    }
-  }
-
-  const findTempEmailIndex =(email, contactEmailIndex) =>{
-    if (contactEmailIndex===0){
-      return 0
-    }
-    const tempEmails = [...emails]
-    for(let i = contactEmailIndex-1; i>0;i--){
-      console.log("i",i)
-      if (i === 1){
-        return i+1
-      }
-      const tempEmailIndex = tempEmails.findIndex(el=>el===contact.emails[i])
-      console.log("tempemailindex",tempEmailIndex)
-      if (tempEmailIndex >= 0){
-        return i+1
-      }
     }
   }
 
@@ -120,10 +100,6 @@ const Contact = ({
     setNewEmails([])
   }, [contact]);
 
-
-  console.log("contact",contact)
-  console.log("contact emails", contact.emails)
-  console.log("state emails", emails)
   return (
     <form className="contact"
     onSubmit={(e)=>{handleSubmit(e)}}
@@ -167,7 +143,6 @@ const Contact = ({
                     <Email email={email}
                       isEnabled={emails.includes(email)}
                       contact={contact} 
-                      index={index} 
                       toggleEmail={toggleEmail}
                       key={`contact-${contact.id}-email-${index}`}
                     />

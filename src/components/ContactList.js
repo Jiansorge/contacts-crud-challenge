@@ -15,7 +15,7 @@ const ContactList = ({ isLoading, contacts, contact, selectContact, addContact }
           .sort((a,b)=>{
             return a.lastName.toUpperCase() > b.lastName.toUpperCase()
           })
-          .map((person,index)=>{
+          .map((person)=>{
               return(
                 <li className={`contact-list__item ${!!contact && contact.id === person.id && 'selected'}`}
                 onClick={()=>selectContact(person.id)}

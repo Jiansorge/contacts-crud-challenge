@@ -6,7 +6,6 @@ import { AiOutlineUndo } from 'react-icons/ai';
 
 const Email = ({
     email, 
-    index, 
     toggleEmail,
     isEnabled
   }) => {
@@ -14,7 +13,7 @@ const Email = ({
   return (
     <li className={ isEnabled ? '': 'deselected'}
     onClick={()=>{
-      toggleEmail(email, index, isEnabled)
+      toggleEmail(email, isEnabled)
     }}
     >
       <p className="contact-email"

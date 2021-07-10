@@ -127,7 +127,6 @@ function App() {
     }
   },[contact,contacts])
 
-  console.log("contacts",contacts)
   return (
     <div className="app"
     >
