@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/contacts-crud-challenge/static/css/main.468cd077.chunk.css",
+    "main.js": "/contacts-crud-challenge/static/js/main.2745cf27.chunk.js",
+    "main.js.map": "/contacts-crud-challenge/static/js/main.2745cf27.chunk.js.map",
+    "runtime-main.js": "/contacts-crud-challenge/static/js/runtime-main.d37a1a7a.js",
+    "runtime-main.js.map": "/contacts-crud-challenge/static/js/runtime-main.d37a1a7a.js.map",
+    "static/js/2.f13acc9a.chunk.js": "/contacts-crud-challenge/static/js/2.f13acc9a.chunk.js",
+    "static/js/2.f13acc9a.chunk.js.map": "/contacts-crud-challenge/static/js/2.f13acc9a.chunk.js.map",
+    "static/js/3.fc33479b.chunk.js": "/contacts-crud-challenge/static/js/3.fc33479b.chunk.js",
+    "static/js/3.fc33479b.chunk.js.map": "/contacts-crud-challenge/static/js/3.fc33479b.chunk.js.map",
+    "index.html": "/contacts-crud-challenge/index.html",
+    "static/css/main.468cd077.chunk.css.map": "/contacts-crud-challenge/static/css/main.468cd077.chunk.css.map",
+    "static/js/2.f13acc9a.chunk.js.LICENSE.txt": "/contacts-crud-challenge/static/js/2.f13acc9a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d37a1a7a.js",
+    "static/js/2.f13acc9a.chunk.js",
+    "static/css/main.468cd077.chunk.css",
+    "static/js/main.2745cf27.chunk.js"
+  ]
+}
