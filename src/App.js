@@ -6,7 +6,6 @@ import ContactList from './components/ContactList';
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [contacts, setContacts] = useState([]);
-  // const [errorMessage, setErrorMessage] = useState(null);
 
   const newContact = () => {
     return (
@@ -113,8 +112,7 @@ function App() {
       })
       .then(setIsLoading(false))
       .catch(error => {
-          // setErrorMessage({ errorMessage: error.toString() });
-          console.error('There was an error!', error);
+        console.error('There was an error!', error);
       });
     }
   }, [contacts, contact, isLoading]);
