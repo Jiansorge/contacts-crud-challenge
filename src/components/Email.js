@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../App.css'
 import { RiDeleteBack2Fill  } from 'react-icons/ri';
 import { AiOutlineUndo } from 'react-icons/ai';
@@ -8,14 +8,13 @@ const Email = ({
     email, 
     index, 
     toggleEmail,
+    isEnabled
   }) => {
-  const [isEnabled, setIsEnabled] = useState(true);
 
   return (
-    <li className={isEnabled? '': 'deselected'}
+    <li className={ isEnabled ? '': 'deselected'}
     onClick={()=>{
       toggleEmail(email, index, isEnabled)
-      setIsEnabled(!isEnabled)
     }}
     >
       <p className="contact-email"

@@ -13,17 +13,38 @@ const Contact = ({
     }) => {
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
-  const [emails, setEmails] = useState(contact?.emails);
+  const [emails, setEmails] = useState([...contact?.emails.sort()]);
   const [newEmails, setNewEmails] = useState([]);
 
-  const toggleEmail = (email, index, isEnabled) => {
+  const toggleEmail = (email, contactEmailIndex, isEnabled) => {
     const tempEmails =  [...emails]
     if (isEnabled){
-      tempEmails.splice(index, 1)
+      const tempEmailIndex = tempEmails.findIndex(el=>el===email)
+      tempEmails.splice(tempEmailIndex, 1)
       setEmails(tempEmails)
-    } else if (!emails.find(el => el === email)){
-      tempEmails.splice(index, 0, email)
+      console.log("removed", email, "at temp index",tempEmailIndex)
+    } else {
+      const tempEmailIndex = findTempEmailIndex(email, contactEmailIndex)
+      tempEmails.splice(tempEmailIndex, 0, email)
       setEmails(tempEmails)
+    }
+  }
+
+  const findTempEmailIndex =(email, contactEmailIndex) =>{
+    if (contactEmailIndex===0){
+      return 0
+    }
+    const tempEmails = [...emails]
+    for(let i = contactEmailIndex-1; i>0;i--){
+      console.log("i",i)
+      if (i === 1){
+        return i+1
+      }
+      const tempEmailIndex = tempEmails.findIndex(el=>el===contact.emails[i])
+      console.log("tempemailindex",tempEmailIndex)
+      if (tempEmailIndex >= 0){
+        return i+1
+      }
     }
   }
 
@@ -72,7 +93,7 @@ const Contact = ({
             onClick={()=>{
               setFirstName(contact.firstName)
               setLastName(contact.lastName)
-              setEmails(contact.emails)
+              setEmails([...contact.emails])
               setNewEmails([])
               cancelChanges(contact.id)
             }}   
@@ -90,7 +111,7 @@ const Contact = ({
     if(!!contact){
       setFirstName(contact.firstName)
       setLastName(contact.lastName)
-      setEmails(contact.emails)
+      setEmails([...contact.emails])
     } else {
       setFirstName('')
       setLastName('')
@@ -101,6 +122,8 @@ const Contact = ({
 
 
   console.log("contact",contact)
+  console.log("contact emails", contact.emails)
+  console.log("state emails", emails)
   return (
     <form className="contact"
     onSubmit={(e)=>{handleSubmit(e)}}
@@ -139,9 +162,10 @@ const Contact = ({
             <ul>
               {
                 !!contact && !!contact.emails 
-                && contact.emails.map((email,index)=> {
+                && contact.emails.sort().map((email,index)=> {
                   return(
-                    <Email email={email} 
+                    <Email email={email}
+                      isEnabled={emails.includes(email)}
                       contact={contact} 
                       index={index} 
                       toggleEmail={toggleEmail}

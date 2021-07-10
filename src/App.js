@@ -52,7 +52,7 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body) 
     };
     fetch(`https://avb-contacts-api.herokuapp.com/contacts/`, requestOptions)
         .then(response => response.json())
@@ -125,7 +125,7 @@ function App() {
     } else if (contact === undefined && contacts.length === 0) {
       setContact(newContact())
     }
-  })
+  },[contact,contacts])
 
   console.log("contacts",contacts)
   return (
