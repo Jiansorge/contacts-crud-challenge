@@ -6,7 +6,7 @@ Created by Jian Sorge
 
 This Contacts web application was built with `create-react-app` for a technical challenge. It utilizes an [API]('https://github.com/BrandSourceDigital/backend-code-test') to perform CRUD operations on a contacts databas via functional components. Mockup is accessible [here](https://www.figma.com/file/ecny7QBqYUP5DF01MZohLj/Contacts-CRUD). See 'instructions.txt' for full instructions.
 
-[Deployed Site]()
+[Deployed Site](https://jiansorge.github.io/contacts-crud-challenge/)
 
 ### API Data Structure
 
@@ -34,6 +34,7 @@ With more time, I would implement API error handling and notification, testing, 
 - Jest + Enzyme Unit Tests
 - Integrated testing using Cypress or Gherkin BDD
 - Error handling and notification of successful/failed API calls
+- Prevent editing inputs immediately after making API call until response received
 - Implement modals to ensure user does not accidentally lose data after clicking cancel, delete or on a different contact
 - Performance enhancement using Lighthouse webpagetest, etc.
 - Accessibility to perform all app functions
